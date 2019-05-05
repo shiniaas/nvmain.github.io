@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0057)Running.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Running</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="Running.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="Running.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="Running.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="Running.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="Running.html?action=search&amp;q=link=Site.Running">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="Running.html">Running</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p>NVMain can be run either using traces or connected to a CPU simulator. At the moment, NVMain supports it's own trace format and traces from GEMS or gem5. Supported simulators include gem5. 
+</p>
+<div class="vspace"></div><h2>Trace Simulation</h2>
+<p>Trace simulation can be performed by simply running NVMain for the desired number of CPU cycles:
+</p>
+<p class="vspace"><code>./nvmain Config/myConfig.config traces/myTrace.nvt 1000000</code>
+</p>
+<p class="vspace">In this example, NVMain will configure the system using the parameters from the <code>Config/myConfig.config</code> file and run the memory trace <code>traces/myTrace.nvt</code> for 1000000 cycles. 
+</p>
+<p class="vspace">Note that the cycle count corresponds to the number of <em>memory</em> cycles. The memory controllers are assumed to run at the same rate as the system clock. The difference between these two can be determined by dividing <code>CPUFreq / CLK</code>, where <code>CLK</code> and <code>CPUFreq</code> are defined in the configuration file.
+</p>
+<p class="vspace">Setting the number of cycles to run as 0 will run the entire trace file. NVMain will exit after the the last line of the trace is read.
+</p>
+<div class="vspace"></div><h2>gem5 Simulation</h2>
+<p>As of NVMain commit 133 and gem5 version 9793, NVMain no longer requires it's own gem5 configuration scripts, so you may use your own or any other example script provided. Below is an example of running gem5 using NVMain once the NVMain patch has been applied (See <a class="wikilink" href="Compiling.html">Compiling</a>). This example will run the binary "hello_world" found in the current directory in system emulation mode:
+</p>
+<p class="vspace"><code>build/X86/gem5.fast configs/example/se.py -c hello_world --cpu-type=detailed --caches --l2cache --mem-type=NVMainMemory --nvmain-config=/path/to/nvmain/Config/myConfig.config</code>
+</p>
+<p class="vspace">NVMain must be enabled by providing the <strong><code>--mem-type=NVMainMemory</code></strong> option. Furthermore, NVMain requires that a configuration file be specified. A configuration file can be specified using the <strong><code>--nvmain-config=/path/to/nvmain/Config/myConfig.config</code></strong> option.
+</p>
+<p class="vspace">Note that current gem5 revisions use the <em>atomic</em> CPU model by default. NVMain is <strong>NOT</strong> enabled by default when the atomic CPU model is used, since this model is typically used for fast-forwarding and warmups. To enable nvmain in the atomic CPU model, use the <strong><code>--nvmain-atomic</code></strong> option. Note that cycle accurate simulation is <strong>not</strong> possible using this CPU model. A mean and variance for NVMain using the atomic CPU can be set using the <strong><code>--nvmain-atomic-latency=100ns</code></strong> and <strong><code>--nvmain-atomic-variance=10ns</code></strong> parameters, where the mean is 100ns and variance is 10ns in this example.
+</p>
+<p class="vspace">It may be desirable to override parameter values in the nvmain configuration files, for example, to run sweeps with different memory parameter values. Any parameter in the NVMain configuration file can be overridden using the <strong><code>--nvmain-PARAM</code></strong> option, where <code>PARAM</code> is the name of <em>any</em> configuration parameter available to nvmain. For example, if we wish to test various address mapping schemes, we can modify the scheme as follows: <code>--nvmain-AddressMappingScheme=SA:R:RK:BK:CH:C</code>. Since <code>AddressMappingScheme</code> is a parameter in the NVMain configuration file, this parameter will be changed to the value provided on the gem5 command line.
+</p>
+<p class="vspace">The final configuration option for NVMain is the warmup option. This option will run NVMain when the atomic CPU is running. This is useful for memory configurations containing caches, such as a DRAM cache, that may need to be warmed-up before detailed simulation begins. This can be enabled using the <strong><code>--nvmain-warmup</code></strong> option.
+</p>
+<p class="vspace">A list of available options can be found by running gem5 with the <code>--help</code> option and looking for options beginning with <code>--nvmain</code>.
+</p>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.Running">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="wikilink" href="Compiling.html">Compiling</a>
+</li><li><a class="selflink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on December 25, 2016, at 02:49 PM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>

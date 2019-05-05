@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0070)SimulatorIntegration.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Simulator Integration</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="SimulatorIntegration.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="SimulatorIntegration.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="SimulatorIntegration.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="SimulatorIntegration.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="SimulatorIntegration.html?action=search&amp;q=link=Site.SimulatorIntegration">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="SimulatorIntegration.html">Simulator Integration</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p>Connecting NVMain to any simulator requires an interface which generates an NVMainRequest. The interface needs to manage sending requests and handle responses. Typically, the simulator interface will also be the "root" module for NVMain. That is, the interface will setup the entire NVMain system consisting of the NVMain base class, Stats class, Config class, EventQueue class, TagGenerator class, and SimInterface class. The interface should also register all hooks by parsing the configuration file and the interface must inherit the NVMObject class in order to have the RequestComplete method to respond to requests.
+</p>
+<p class="vspace">A great starting point when interfacing with a new simulator would be to look at the gem5 patch. If you are already added to the repository on bitbucket, you can <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-291" rel="nofollow">view the patch</a>. The NVMainMemory::init() method allocates all the classes mentioned above. Note that the Config class is allocated in the constructor and code is provided to parse command line options to override configuration values. You may simply copy and paste these codes into similar initialization functions for your simulator.
+</p>
+<p class="vspace">Next, the NVMainRequest structs must be allocated and sent to NVMain for each request. At the most basically level, NVMain only requires a valid physical address, request type (READ or WRITE), and an owner (set this to the NVMain class your interface allocated). Setting the data value in the NVMainRequest is also strongly recommended. If you do not require data or choose to ignore it, you should set all bytes explicitly to zero. Note that NVMain by default assumes 64 byte memory words, so you must iterate over all 64 bytes when zeroing the data. You may wish to <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-578" rel="nofollow">refer to the gem5 patch</a> as an example.
+</p>
+<p class="vspace">Issuing requests can be done in two different ways: via timing interface or atomic interface. The timing interface sends the request to NVMain and NVMain will return a response once the request is complete. This is the most precise simulation method. Atomic interfaces are required for simulators that simply ask "how long will this memory operation take?" For an atomic interface, it is recommended that you issue commands to NVMain normally (i.e., via the IssueCommand interface) and use the <em>average request latency</em> as the response for the atomic interface. NVMain should be cycled (NVMain::Cycle(1)) at the same rate as the last-level cache. This is all that is require for an atomic interface, therefore the rest of this guide will focus on the timing interface.
+</p>
+<p class="vspace">An example of the timing interface can again be seen <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-627" rel="nofollow">in the gem5 patch</a>. Notice that we first check if the request can be issued. If it can not, our method returns false. This tells gem5 to retry the request later and the simulator may potentially stall until the memory is ready. In the case of a stalled request, we are checking if a retry is needed <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-797" rel="nofollow">in the RequestComplete method</a>. 
+</p>
+<p class="vspace">Once a request can be issued, it should be issued to any hooks that may be listening to requests flowing between the root module and NVMain class. In the gem5 patch, we must respond with a gem5 packet. Therefore, an intermediate class is made which holds the NVMainRequest pointer and the gem5 packet pointer. This is stored in a map of outstanding requests until the request is completed. The request is sent to NVMain and and post hooks are subsequently called. Note that for write requests, we make a copy of the request so that a valid pointer is sent as a response to RequestComplete. The original request is responded to gem5 immediately as the request is placed in the memory's transaction queue.
+</p>
+<p class="vspace">The response will are via the RequestComplete method in timing mode. Here we check for the request in our map of outstanding requests and issue the response packet via gem5's interface. Here you would respond using the appropriate method for your simulator. At this point, the pointer to your request should also be deleted to prevent memory leaks. We now also remove the intermediate class from the map of outstanding requests and free the memory. 
+</p>
+<p class="vspace">Remember to also cycle NVMain! For gem5, this is done via the <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-919" rel="nofollow">tick() method</a>. It is also a good idea to clean up all the classes allocated in the destructor for your class if applicable. This is also a good place to dump stats for NVMain so you have actual output for the memory statistics!
+</p>
+<p class="vspace">For completeness sake, you may optionally wish to call NVMain's checkpointing and restore functions when your simulator's checkpointing and restore functions are called. In the gem5 patch, you may refer to the <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-881" rel="nofollow">serialize</a> and <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain/src/1e7c2613f963502da403167386524123851afb4a/patches/gem5/nvmain2-classic-gem5-10146?at=default#cl-900" rel="nofollow">deserialize</a> methods. Additionally, if your simulator provides the ability to print stats periodically, you may also call the PrintAll method in NVMain's Stats class.
+</p>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.SimulatorIntegration">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="wikilink" href="Compiling.html">Compiling</a>
+</li><li><a class="wikilink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on June 11, 2014, at 05:45 AM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>

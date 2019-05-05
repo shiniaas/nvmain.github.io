@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0061)Configuring.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Configuring</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="Configuring.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="Configuring.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="Configuring.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="Configuring.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="Configuring.html?action=search&amp;q=link=Site.Configuring">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="Configuring.html">Configuring</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p>NVMain uses a configuration script to determine run behavior. Most of the parameters are necessary to run, while some NVMObjects will have custom parameters (e.g., DRAM controllers have additional parameters), this wiki entry defines the most common parameters. 
+</p>
+<div class="vspace"></div><h2>Memory Parameters</h2>
+<p>The memory parameters as used to define the memory architecture, for example, the number of banks, ranks, channels, the memory controller to use, and interconnection network.
+</p>
+<div class="vspace"></div><ul><li><strong>BANKS</strong> is the number of banks in each memory device.
+</li><li><strong>BPC</strong> is number of bits from each device on each clock cycle.
+</li><li><strong>BusWidth</strong> is the number of data pins in a rank of memory.
+</li><li><strong>CHANNELS</strong> is the number of channels in the memory subsystem.
+</li><li><strong>CLK</strong> is the frequency of the interconnect to the memory.
+</li><li><strong>COLS</strong> is the number of logical columns in each memory bank. Logical meaning selectable columns. Typically this will be the number of bitlines divided by the number of bits provided by each device in a rank.
+</li><li><strong>CPUFreq</strong> is the frequency at which the memory controller will run. Typically this is the same as the CPU frequency you are simulating.
+</li><li><strong>INTERCONNECT</strong> is the name of the interconnect to use.
+</li><li><strong>UseRefresh</strong> is whether refresh is used in the memory subsystem.
+</li><li><strong>MEM_CTL</strong> is the name of the memory controller to use.
+</li><li><strong>MULT</strong> is the clock rate multiplier. The memory core will run at the frequency of MULT*CLK. This is defined by JEDEC as 1 for DDR, 2 for DDR2, and 4 for DDR3.
+</li><li><strong>RANKS</strong> is the number of ranks on each channel.
+</li><li><strong>RATE</strong> is the number of data outputs per clock cycle. Typically this is 2 for DDR and 1 for SDRAM.
+</li><li><strong>RAW</strong> is the maximum number of activations that can occur in the time tRAW.
+</li><li><strong>RBSize</strong> is the size of the row buffer in bytes. Note that RBSize / (device width * burst length) must be less than or equal to COLS.
+</li><li><strong>RefreshRows</strong> is the number of rows to refresh for each refresh command.
+</li><li><strong>ROWS</strong> is the number of wordlines in a each memory bank.
+</li><li><strong>WriteMode</strong> is the method to use when writing to non-volatile a memories. The options are <code>WriteThrough</code> or <code>WriteBack</code>. WriteThrough will stall the memory bank during the write operation. WriteBack stalls the memory bank during the precharge operation. The stall time is tWP in both cases.
+</li></ul><div class="vspace"></div><h2>Timing Parameters</h2>
+<p>Timing parameters are in unit of memory clock cycles, tCK.
+</p>
+<div class="vspace"></div><ul><li><strong>tAL</strong> is the time for posted commands. Typical this is either 0 or 1, depending if posted commands are supported.
+</li><li><strong>tBURST</strong> is the time to burst a cacheline on the interconnect. This time depends on the disparity between the cacheline size and interconnect width.
+</li><li><strong>tCAS</strong> is the time for data to be sensed by the sense amplifiers and output to the interconnect.
+</li><li><strong>tCCD</strong> is the delay of the column decoder (a multiplexer) between the sense amplifiers and output circuitry.
+</li><li><strong>tCMD</strong> is the time a command spends on the bus. Usually 1 memory clock cycle.
+</li><li><strong>tCWD</strong> is the delay to switch the two-way input/output circuitry from output to input.
+</li><li><strong>tOST</strong> is the time to switch the on-die termination. Applicable for DDRx memories, but not LPDDRx memories.
+</li><li><strong>tRAS</strong> is the time needed to restore data read from memory cells back  to memory cells in the case the data is lost. This is typically 0 for non-volatile memory, and around 35ns for DRAM.
+</li><li><strong>tRAW</strong> is minimum amount of time for N activations to occur, where N is the value of the RAW parameter. For standard DRAM, this is the value for tFAW when RAW is set to 4.
+</li><li><strong>tRC</strong> is not used in NVMain. 
+</li><li><strong>tRCD</strong> is the row activation time.
+</li><li><strong>tREFW</strong> is the maximum amount of time between refreshes of the same row. Usually this is 64ms for DDRx DRAM, 32ms for LPDDRx DRAM. Non-volatile memory does not require refresh, and this parameter is ignored.
+</li><li><strong>tRFC</strong> is the time for a refresh command to complete. Non-volatile memory does not require refresh, and this parameter is ignored.
+</li><li><strong>tRP</strong> is the time to precharge the bitlines to the voltage required by the sense amplifiers.
+</li><li><strong>tRRDR</strong> is the minimum time between activations when no write has occurred in the previous activation. Used to limit the peak current.
+</li><li><strong>tRRDW</strong> is the minimum time between activations when a write occurred in the previous activation. Used to limit the peak current.
+</li><li><strong>tRTP</strong> is the time between a read and precharge command. Needed to ensure the read burst completes and the sense amplifiers can now be used to equalize the bitlines. Must be at least tBURST.
+</li><li><strong>tRTRS</strong> is a small delay to allow transmission line buses to discharge when switching between different bus drivers (i.e., different ranks). Normally 1 for transmission line interconnects. 
+</li><li><strong>tWP</strong> is the time for the write pulse to complete.
+</li><li><strong>tWR</strong> is the time to recover from a write command before a precharge can be issued.
+</li><li><strong>tWTR</strong> is the time between a write and a read command. 
+</li></ul><p class="vspace">Additionally, timings related to low-power states may be needed.
+</p>
+<div class="vspace"></div><ul><li><strong>tPD</strong> is the time to powerdown to any powerdown mode (precharge powerdown fast exit, precharge powerdown slow exit, active powerdown)
+</li><li><strong>tXP</strong> is the powerup time from active powerdown or precharge powerdown fast exit
+</li><li><strong>tXPDLL</strong> is the powerup time from precharge powerdown slow exit
+</li><li><strong>tRDPDEN</strong> is the time from read to powerdown entry with a precharge issued (precharge powerdown)
+</li><li><strong>tWRPDEN</strong> is the time from write to powerdown entry with no precharge issued (active powerdown)
+</li><li><strong>tWPAPDEN</strong> is the time from write to powerdown entry with a precharge issued (precharge powerdown)
+</li></ul><div class="vspace"></div><h2>MLC Parameters</h2>
+<ul><li><strong>UniformWrites</strong> is used to enable variable write times (e.g., Program-and-Verify). Set this to <strong>false</strong> to enable.
+</li><li><strong>MLCLevels</strong> is the number of bits in each cell.
+</li><li><strong>ProgramMode</strong> specifies whether to use single-RESET-multiple-SET (SRMS) or single-SET-multiple-RESET (SSMR). Possible values are "SRMS" and "SSMR".
+</li><li><strong>WPVariance</strong> is the variance on the number of SET pulses (for single-RESET-multiple-SET) or RESET pulses (for single-SET-multiple-RESET).
+</li><li><strong>tWP0</strong> is the RESET pulse time
+</li><li><strong>tWP1</strong> is the SET pulse time
+</li><li><strong>nWP00</strong> is the number of program pulses to write 00
+</li><li><strong>nWP01</strong> is the number of program pulses to write 01
+</li><li><strong>nWP10</strong> is the number of program pulses to write 10
+</li><li><strong>nWP11</strong> is the number of program pulses to write 11
+</li></ul><div class="vspace"></div><h2>Energy Parameters </h2>
+<div class="vspace"></div><h2>Control Parameters</h2>
+<ul><li><strong>PrintGraphs</strong> will output ASCII timing diagrams for each bank when enabled.
+</li><li><strong>PrintPreTrace</strong> will output a memory trace in NVMain format for memory requests previous to scheduling.
+</li><li><strong>PreTraceFile</strong> specifies the path to the pretrace output file. If a relative path is used, it will be relative to the directory in which the configuration file is located.
+</li><li><strong>EchoPreTrace</strong> will output the pretrace to stdout if set to true.
+</li><li><strong>PeriodicStatsInterval</strong> will output NVMain stats every N memory cycles, where N is the value of this parameter.
+</li><li><strong>TraceReader</strong> specifies the format of the trace file in the case of trace-based simulation.
+</li><li><strong>EnduranceModel</strong> specifies the endurance model to use in the memory system. Unless you are testing endurance models, please use NullModel for the best simulation speed and memory usage.
+</li><li><strong>EnduranceDist</strong> specifies the probability distribution to use when determining endurance for memory cells. Each distribution has different parameters. See <a class="wikilink" href="Endurance.html">Endurance</a>.
+</li><li><strong>InitPD</strong> will start memory banks in powered down mode if enabled.
+</li></ul>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.Configuring">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="wikilink" href="Compiling.html">Compiling</a>
+</li><li><a class="wikilink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on October 22, 2013, at 05:13 AM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>

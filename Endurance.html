@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)Endurance.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Endurance</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="Endurance.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="Endurance.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="Endurance.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="Endurance.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="Endurance.html?action=search&amp;q=link=Site.Endurance">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="Endurance.html">Endurance</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p>Endurance models are used to provided fault tolerance to non-volatile memories in case of stuck-at faults. The endurance model interface in NVMain intercepts read requests to banks and creates a counter for the number of writes to a specific region of memory. The region of memory can range from as large as a page to as small as a single bit. Counters for each region are created using a probability distribution. Once any of the counters reach 0, the region is considered stuck-at some value and the <a class="createlinktext" rel="nofollow" href="FaultModels.html?action=edit">Fault Models</a><a rel="nofollow" class="createlink" href="FaultModels.html?action=edit">?</a> take over.
+</p>
+<p class="vspace">NVMain provides several example endurance models and two distributions. The different models track endurance over different region sizes. Note that <strong>endurance models should not be used unless your are experimenting with endurance modeling</strong>. The endurance models can be very slow, and may require hundreds of megabytes or even gigabytes of memory to track large memory systems. If you are not testing endurance <strong>NullModel</strong> should be specified in the configuration.
+</p>
+<div class="vspace"></div><h3>Modeling endurance</h3>
+<p>When modeling endurance, the distribution's mean and variance should be relatively small to ensure that errors occur in reasonable simulation time (i.e., around 10000 for mean, 1000 for variance). Additionally, a small memory system should be used (i.e., around 128MB total) since the amount of information that needs to be tracked may be very large. For single bit tracking, this is 8 bytes per bit, or a maximum of 8GB of data for a 128MB memory system.
+</p>
+<div class="vspace"></div><h3>Endurance Models</h3>
+<ul><li>NullModel - This model assumes infinite endurance. No tracking is done and no memory storage is used. See <code>Endurance/NullModel/</code>.
+</li><li>FlipNWrite - This model is an example of a real proposal of an endurance protection scheme which stores either the word value or inverted word value, based on whichever has the lowest hamming distance. Additionally, the inverted bit is stored. Tracking is done at bit level, so this may require a lot of storage. See <code>Endurance/FlipNWrite/</code>.
+</li><li>RowModel - Models endurance of an entire row. Once a certain number of writes occur in this row, the entire row is considered stuck-at some value. See <code>Endurance/RowModel/</code>.
+</li><li>WordModel - Models endurance of an entire word (size of a column burst, usually one cache line). Once a certain number of writes occur in this word, the entire word is considered stuck-at some value. See <code>Endurance/WordModel/</code>.
+</li><li>ByteModel - Models endurance of a signle byte. Once a certain number of writes occur in this byte, the byte is considered stuck-at some value. See <code>Endurance/ByteModel/</code>.
+</li><li>BitModel - Models endurance of each individual <em>bit</em> of memory. Once a certain number of writes occur in a bit, it is considered stuck-at some value. See <code>Endurance/BitModel/</code>.
+</li></ul><div class="vspace"></div><h3>Endurance model configuration parameters</h3>
+<ul><li><code>EnduranceModel</code> - Specifies which endurance model to use.
+</li><li><code>FlipNWriteGranularity</code> - Specifies the size of a <em>word</em> in the FlipNWrite model.
+</li></ul><div class="vspace"></div><h3>Endurance distributions</h3>
+<ul><li>Normal - A gaussian distribution is used to assign countdown values for each region.
+</li><li>Uniform - The same value is used for all countdown values in each region.
+</li></ul><div class="vspace"></div><h3>Endurance distribution configuration parameters</h3>
+<ul><li><code>EnduranceDist</code> - Specifies the endurance distribution to use.
+</li><li><code>EnduranceDistMean</code> - Specifies the mean for both Normal and Uniform distributions.
+</li><li><code>EnduranceDistVariance</code> - Specifies the variance for countdown values in the Normal distribution.
+</li></ul>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.Endurance">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="wikilink" href="Compiling.html">Compiling</a>
+</li><li><a class="wikilink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on February 21, 2013, at 01:12 PM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0042)# -->
+<!-- saved from url=(0069)SimulatorInterfaces.html -->
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-	<title>NVMain Wiki Main/Home Page</title>
+	<title>NVMain Wiki Site/Simulator Interfaces</title>
 	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
 	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
 	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
@@ -25,7 +25,7 @@
     .rfloat { float:right; margin-left:0.5em; }
 a.varlink { text-decoration:none; }
 
---></style>  <meta name="robots" content="index,follow">
+--></style>  <meta name="robots" content="noindex,nofollow">
 
 </head>
 
@@ -49,10 +49,11 @@ a.varlink { text-decoration:none; }
 					<!--PageActionFmt-->
 					<ul class="menu pageactions">
 						<li>
-						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="#?n=Main.HomePage">View</a>
-</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="#?n=Main.HomePage?action=edit">Edit</a>
-</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="#?n=Main.HomePage?action=diff">History</a>
-</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="#?n=Main.HomePage?action=print">Print</a>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="SimulatorInterfaces.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="SimulatorInterfaces.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="SimulatorInterfaces.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="SimulatorInterfaces.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="SimulatorInterfaces.html?action=search&amp;q=link=Site.SimulatorInterfaces">Backlinks</a>
 </li></ul>
 
 						</li>
@@ -72,37 +73,23 @@ a.varlink { text-decoration:none; }
 
 			<div id="content">
 				<!--PageTitleGroupFmt-->
-				<a href="#?n=Main" class="pagegroup">Main</a>
+				<a href="#" class="pagegroup">Site</a>
 				<!--/PageTitleGroupFmt-->
 				<!--PageTitleFmt-->
-				<h2 id="page-head" class="page-head"><a href="#?n=Main.HomePage">Home Page</a></h2>
+				<h2 id="page-head" class="page-head"><a href="SimulatorInterfaces.html">Simulator Interfaces</a></h2>
 				<!--/PageTitleFmt-->
 
 				<!--PageText-->
 <div id="wikitext">
-<p>Welcome to the NVMain wiki!
+<p>Simulator interfaces are optional for running NVMain. The goal of a simulator interface is to provide standard methods which can be used to gather statistics from any underlying simulator and used within NVMain. Typically, these statistics are not needed, however memory controllers which schedule based on statistics such as LLC miss rate, program counter, IPC, etc. require an interface to be available. 
 </p>
-<p class="vspace">NVMain is a cycle-level main memory simulator designed to simulate emerging non-volatile memories at the architectural level. Since the current status of non-volatile memory is unknown and this is a research tool, flexability is provided to implement different variations of memory controllers, interconnects, organizations, etc. Detailed modification information is provided in the <a class="wikilink" href="Documentation.html">Documentation</a>. Thanks for trying NVMain!
+<p class="vspace">The standard methods currently are listed below:
 </p>
-<p class="vspace"><span style="font-size:144%"><strong>Tutorial</strong></span>
+<p class="vspace"><code>GetInstructionCount( int core )</code> - This method should return the number of instructions committed by the core with the given integer id, starting with an id of 0 for the first core.
+<code>GetCacheMisses( int core, int level )</code> - This method should return the number of misses by a cache at a particular level. The core id is used to specify which cache of a specific level is accessed by that core, in the case of private caches. For shared caches, the core id is not considered. The level is used to specify which cache level should be checked. Level 0 is considered to be the CPU and should return the total number of load operations (i.e., misses to the register file). Level 1 should return statistics from the L1 cache, level 2 from L2, etc.
+<code>GetCacheHits( int core, int level )</code> - This method operates similar to GetCacheMisses in terms of the core and level parameters. For level 0 (the CPU itself), the method may return zero as there is no well-defined way to determine hits to the register file.
 </p>
-<p class="vspace">A tutorial on NVMain was held at ISCA 2014 as part of the "<a class="urllink" href="http://mrp5060.bgghost.net/ISCA14-Tutorial-NVMain-Merged-Version-0614.pptx" rel="nofollow">Architectural Modeling for Emerging Memory Technologies</a>" tutorial.
-</p>
-<p class="vspace"><span style="font-size:144%"><strong>Funding Information</strong></span>
-</p>
-<p class="vspace">This work is supported in part by NSF 1218867, 1213052, and Department of Energy under Award Number DE-SC0005026.
-</p>
-<p class="vspace"><span style="font-size:144%"><strong>Related Work</strong></span>
-</p>
-<p class="vspace">This work was complete at the Pennsylvania State University under advisement of <a class="urllink" href="http://www.ece.ucsb.edu/~yuanxie/" rel="nofollow">Yuan Xie</a> (now at UCSB). For more work from the group, see the references page at <a class="urllink" href="http://www.ece.ucsb.edu/~yuanxie/Publications.html" rel="nofollow">http://www.ece.ucsb.edu/~yuanxie/Publications.html</a>
-</p>
-<p class="vspace"><span style="font-size:144%"><strong>Citation Information</strong></span>
-</p>
-<p class="vspace">If you use this software for publishable research, please include the original NVMain paper in the citation list and mention the use of NVMain.
-</p>
-<p class="vspace"><strong>NVMain 2.0: Architectural Simulator to Model (Non-)Volatile Memory Systems</strong>, Matt Poremba, Tao Zhang, Yuan Xie, <em>Computer Architecture Letters (CAL)</em>, 2015. 
-</p>
-<p class="vspace">DOI Link: <a class="urllink" href="http://dx.doi.org/10.1109/LCA.2015.2402435" rel="nofollow">http://dx.doi.org/10.1109/LCA.2015.2402435</a>
+<p class="vspace">Currently an interface for gem5 is provided as a sample SimInterface. This interface works by searching gem5's statistics for the strings matching the required statistic name. Note that statistic names in gem5 are determined by the python class name. As a result, the simulator interface may need to be modified to match the string for your python configuration file in gem5.
 </p>
 </div>
 
@@ -114,7 +101,7 @@ a.varlink { text-decoration:none; }
 				<ul>
 					<li id="search">
 						<form id="searchform" action="#" method="get"><fieldset>
-							<input type="hidden" name="n" value="Main.HomePage">
+							<input type="hidden" name="n" value="Site.SimulatorInterfaces">
 							<input type="hidden" name="action" value="search">
 							<p>
 								<input id="s" class="text" type="text" name="q" value="">
@@ -127,7 +114,7 @@ a.varlink { text-decoration:none; }
 
 				<!--PageRightFmt-->
 				<ul><li>
-					<ul><li><a class="selflink" href="#?n=Main.HomePage">HomePage</a>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
 </li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
 </p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
 </li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
@@ -143,7 +130,7 @@ a.varlink { text-decoration:none; }
 
 			<div id="footer">
 				<!--PageFooterFmt-->
-					<p>Page last modified on December 25, 2016, at 02:40 PM EST
+					<p>Page last modified on June 13, 2014, at 06:22 AM EST
 </p>
 
 				<!--/PageFooterFmt-->

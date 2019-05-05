@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)Compiling.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Compiling</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="Compiling.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="Compiling.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="Compiling.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="Compiling.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="Compiling.html?action=search&amp;q=link=Site.Compiling">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="Compiling.html">Compiling</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p><strong>Updated information can be found on <a class="urllink" href="https://bitbucket.org/mrp5060/nvmain" rel="nofollow">Bitbucket</a></strong>
+</p>
+<p class="vspace">NVMain can be run on trace files or by interfacing with another simulator. 
+</p>
+<div class="vspace"></div><h2>Trace-based Simulation Build</h2>
+<p>NVMain uses <a class="urllink" href="http://www.scons.org/" rel="nofollow">SCons</a> to build the standalone version. To build NVMain for trace-based simulation, you can just run <code>scons</code> from the command line where you cloned nvmain. By default, a release version of NVMain is built, which is fully optimized without debugging information. In order to a build a version which can be run in a debugger, you can select the release type using the build-type option: <code>scons --build-type=debug</code>. The available build types are <code>debug</code> for debugging, <code>prof</code> which enabling profiling support, and <code>fast</code> which is the default, fully optimized build.
+</p>
+<div class="vspace"></div><h2>NVMain with gem5</h2>
+<p>Currently NVMain supports <a class="urllink" href="http://gem5.org/" rel="nofollow">gem5</a> as a CPU/cache simulator. To build for gem5, import for the patch using mercurial. If you don't already have a mercurial queue setup, do this first. It is recommended you use the latest gem5 repository and NOT gem5-stable, since gem5-stable tends to be quite old. You can setup a mercurial queue as follows:
+</p>
+<p class="vspace"><code>hg qinit</code>
+</p>
+<div class="vspace"></div><h3>Applying the patches</h3>
+<p>Assuming NVMain is in /path/to/nvmain:
+</p>
+<p class="vspace"><code>hg qimport -f /path/to/nvmain/patches/gem5/nvmain2-gem5-XXXX+</code>
+</p>
+<p class="vspace">where XXXX is a version number related to the gem5 commit that the patch was written and tested on. You should pick a version of the patch that is less than or equal to your gem5 version. You can check the gem5 revision using the command "hg summary" in the gem5 directory.
+</p>
+<p class="vspace">Make sure to apply the patch before compiling gem5!
+</p>
+<p class="vspace">It is recommended you do NOT place the nvmain directory within a subdirectory of your gem5 installation. If you do this, note that you will still need to use the EXTRAS directive when building gem5 with scons.
+</p>
+<p class="vspace"><code>hg qpush</code>
+</p>
+<p class="vspace">You can verify the patch was pushed using <code>hg qapplied</code> and checking that the nvmain patch is in the list.
+</p>
+<div class="vspace"></div><h3>Compiling gem5 with NVMain</h3>
+<p>Once the patch is applied, you can compile in one of two ways. If your NVMain path is NOT a subdirectory of gem5, you will need to also provide the path to NVMain via the EXTRAS variable for scons:
+</p>
+<p class="vspace"><code>scons EXTRAS=/path/to/nvmain build/X86/gem5.fast</code> 
+</p>
+<div class="vspace"></div><h3>Saving your changes</h3>
+<p>For your sanity you may want to create a patch containing your changes. This will make it easy for you to update NVMain.
+</p>
+<p class="vspace"><code>hg qnew mychanges.patch</code>
+</p>
+<p class="vspace">You can save your changes using qrefresh:
+</p>
+<p class="vspace"><code>hg qrefresh</code>
+</p>
+<p class="vspace">Now updating NVMain is simple. Just qrefresh to save your changes, remove the patch using qpop, and re-import the new NVMain patch and push the patches back:
+</p>
+<p class="vspace"><code>hg qrefresh</code> <br><code>hg qpop -a</code> <br><code>hg qimport -f /path/to/nvmain/patches/gem5/nvmain</code> <br><code>hg qpush -a</code>
+</p>
+<p class="vspace">If all goes well, you should have successfully updated. You can also follow these steps to get the latest version of gem5!
+</p>
+<div class="vspace"></div><h2>Other CPU simulators</h2>
+<p>Don't use gem5? You can follow the instructions in the documentation to create an interface to NVMain at the <a class="wikilink" href="SimulatorIntegration.html">Simulator Integration</a> page.
+</p>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.Compiling">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="selflink" href="Compiling.html">Compiling</a>
+</li><li><a class="wikilink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on October 16, 2018, at 09:45 AM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>

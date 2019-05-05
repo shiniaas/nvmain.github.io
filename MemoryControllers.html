@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0067)MemoryControllers.html -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>NVMain Wiki Site/Memory Controllers</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" title="style (screen)">
+	<link rel="stylesheet" type="text/css" href="color-copper.css" media="screen" title="style (screen)">
+	<!--HTMLHeader--><style type="text/css"><!--.editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+#page { width: 900px; }#content, #wikitext { width: 655px; }#sidebar { width: 175px; }
+  table.markup { border:2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  table.vert td.markup1 { border-bottom:1px solid #ccf; }
+  table.horiz td.markup1 { width:23em; border-right:1px solid #ccf; }
+  table.markup caption { text-align:left; }
+  div.faq p, div.faq pre { margin-left:2em; }
+  div.faq p.question { margin:1em 0 0.75em 0; font-weight:bold; }
+  div.faqtoc div.faq * { display:none; }
+  div.faqtoc div.faq p.question 
+    { display:block; font-weight:normal; margin:0.5em 0 0.5em 20px; line-height:normal; }
+  div.faqtoc div.faq p.question * { display:inline; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+
+--></style>  <meta name="robots" content="noindex,nofollow">
+
+</head>
+
+<body>
+	<div id="page">
+		<div id="page-inner">
+
+			<div id="header">
+				<div id="header_nav">
+					<ul class="menu tabnav">
+						<li>
+							<!--PageTabsFmt-->
+							<ul><li><a class="wikilink" href="index.html">PmWiki</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab2</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li><li><a class="createlinktext" rel="nofollow" href="#?action=edit">tab3</a><a rel="nofollow" class="createlink" href="#?action=edit">?</a>
+</li></ul>
+
+							<!--/PageTabsFmt-->
+						</li>
+					</ul>
+					<!--PageActionFmt-->
+					<ul class="menu pageactions">
+						<li>
+						<ul><li class="browse">      <a accesskey="" rel="nofollow" class="selflink" href="MemoryControllers.html">View</a>
+</li><li class="edit">      <a accesskey="e" rel="nofollow" class="wikilink" href="MemoryControllers.html?action=edit">Edit</a>
+</li><li class="diff">   <a accesskey="h" rel="nofollow" class="wikilink" href="MemoryControllers.html?action=diff">History</a>
+</li><li class="print">     <a accesskey="" rel="nofollow" class="wikilink" href="MemoryControllers.html?action=print">Print</a>
+</li><li class="backlinks"> <a accesskey="" rel="nofollow" class="wikilink" href="MemoryControllers.html?action=search&amp;q=link=Site.MemoryControllers">Backlinks</a>
+</li></ul>
+
+						</li>
+					</ul>
+					<!--/PageActionFmt-->
+				</div>
+
+				<!--PageHeaderFmt-->
+				<div id="headerimg">
+					<h1 class="sitetitle"><a class="urllink" href="#" rel="nofollow">NVMain Wiki</a></h1>
+<div class="sitetag">
+</div>
+
+				</div>
+				<!--/PageHeaderFmt-->
+			</div>
+
+			<div id="content">
+				<!--PageTitleGroupFmt-->
+				<a href="#" class="pagegroup">Site</a>
+				<!--/PageTitleGroupFmt-->
+				<!--PageTitleFmt-->
+				<h2 id="page-head" class="page-head"><a href="MemoryControllers.html">Memory Controllers</a></h2>
+				<!--/PageTitleFmt-->
+
+				<!--PageText-->
+<div id="wikitext">
+<p>Writing a memory controller does not require any knowledge of the memory bank timings to write. Additionally, some <em>basic scheduling functions</em> are provided to make creating a memory controller simple. 
+</p>
+<p class="vspace">The memory controller class provides some common functions that can be used when scheduling requests. These common functions make use of the <code>IsIssuable</code> and <code>IssueCommand</code> functions required for all <code>NVMObject</code>s, so even writing schedulers without these <em>basic scheduling functions</em> can be done by waiting for a request to be issuable. 
+</p>
+<div class="vspace"></div><h2>Basic Scheduling Functions</h2>
+<p>The common functions are listed below:
+</p>
+<p class="vspace"><code>FindStarvedRequest</code> <br><code>FindRowBufferHit</code> <br><code>FindCachedAddress</code> <br><code>FindOldestReadyRequest</code> <br><code>FindClosedBankRequest</code> <br><code>IssueMemoryCommands</code>
+</p>
+<div class="vspace"></div><ul><li><code>FindStarvedRequest</code> looks at a transaction queue for requests to banks that have had several row-buffer hit requests, which have caused this request to be delayed.
+</li><li><code>FindRowBufferHit</code> looks at the queue for a request that can be issued without sending an activate or precharge command to memory.
+</li><li><code>FindCachedAddress</code> looks for an address that can be read or written somewhere in the memory system without sending an activate or precharge command,
+</li><li><code>FindOldestReadyRequest</code> finds the oldest request in the transaction queue that is ready to be issued. Since the transaction queues are assumed to be sorted, this just looks starting from the beginning of the queue and scaning towards the end.
+</li><li><code>FindClosedBankRequest</code> finds a request to a bank that is not active. The first issued request and requests arriving after a power down will be served by this function.
+</li><li><code>IssueMemoryCommands</code> takes a request and issues the corresponding commands to main memory. 
+</li></ul><div class="vspace"></div><h2>Example Memory Controllers</h2>
+<h3><a class="wikilink" href="FCFS.html">First-Come, First-Serve Scheduler</a></h3>
+<p>As a simple example, a first come first serve scheduler can take the request at the head of the transaction queue and issue it using <code>IssueMemoryCommands</code>. This will issue requests in the order they arrive (first come, first serve). It does not need to worry about starvation since no request can be blocked by another request taking priority.
+</p>
+<div class="vspace"></div><h3><a class="wikilink" href="FRFCFS.html">First Ready, First Come, First Serve (FR-FCFS)</a></h3>
+<p>A more complicated example is using FR-FCFS. This scheduler looks for row buffer hits to reduce the average latency of requests. If a row buffer hit is not found, it looks for the oldest ready request or a request to a closed bank. Finally, it must check for starvation before looking for row buffer hits. Once any of the commands find a request, the remaining function calls are skipped and the first request found is issued. Example code is shown in <code>MemControl/FRFCFS/FRFCFS.cpp::Cycle()</code>.
+</p>
+<div class="vspace"></div><h3><a class="wikilink" href="FRFCFSWQF.html">FR-FCFS with Write-Buffering</a></h3>
+<p>If we want to prioritize reads over write requests, we can do this using a write-buffer. Write requests are inserted into a write transaction queue, and reads are issued to a read transaction queue. All of the common functions allow for a predicate to be passed which must also return true for a request to be selected. In this case, we'll do a simple write-buffer which drains write requests when the write buffer is full. 
+</p>
+<p class="vspace">Our predicate will return true when the write-buffer is full. Then, our scheduling code can use the same procession function calls as the FR-FCFS controller, but called on the write transaction queue and passing our predicate. After these function calls, the same sequence of calls can be used on the read transaction queue with no predicate.
+</p>
+</div>
+
+			</div>
+
+			<div id="sidebar">
+				<!--PageSearchFmt-->
+				<p class="sidehead">Search</p>
+				<ul>
+					<li id="search">
+						<form id="searchform" action="#" method="get"><fieldset>
+							<input type="hidden" name="n" value="Site.MemoryControllers">
+							<input type="hidden" name="action" value="search">
+							<p>
+								<input id="s" class="text" type="text" name="q" value="">
+								<input id="searchsubmit" class="button" type="submit" value="Go">
+							</p>
+						</fieldset></form>
+					</li>
+				</ul>
+				<!--/PageSearchFmt-->
+
+				<!--PageRightFmt-->
+				<ul><li>
+					<ul><li><a class="wikilink" href="#?n=Main.HomePage">HomePage</a>
+</li></ul><p class="vspace sidehead"> <a class="wikilink" href="index.html">PmWiki</a>
+</p><ul><li><a class="wikilink" href="Documentation.html">Documentation</a>  
+</li><li><a class="wikilink" href="GettingNVMain.html">Getting NVMain</a>
+</li><li><a class="wikilink" href="Compiling.html">Compiling</a>
+</li><li><a class="wikilink" href="Running.html">Running</a>
+</li><li><a class="wikilink" href="ChangeLog.html">ChangeLog</a>
+</li></ul><p class="vspace" style="text-align: right;"> <span style="font-size:83%"><a class="wikilink" href="#?action=edit">edit SideBar</a></span>
+</p>
+
+				</li></ul>
+				<!--/PageRightFmt-->
+			</div>
+
+			<div id="footer">
+				<!--PageFooterFmt-->
+					<p>Page last modified on June 12, 2014, at 12:02 PM EST
+</p>
+
+				<!--/PageFooterFmt-->
+				<ul class="menu">
+					<li><a href="http://pmwiki.com/Cookbook/Minimous">Minimous</a> theme originally by <a href="http://andytson.com/blog/2010/01/minimous-posterous-minimalist-look-in-wordpress/">Andy Thompson</a>, adapted by <a href="http://solidgone.org/Skins">David Gilbert</a></li>
+					<li>powered by <a href="http://pmwiki.com/">PmWiki</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<!--HTMLFooter-->
+
+
+</body></html>
